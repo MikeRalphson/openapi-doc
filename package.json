@@ -1,0 +1,68 @@
+{
+  "name": "openapi-doc",
+  "description": "OpenAPI (Swagger 2.0) document builder.",
+  "version": "1.0.2",
+  "author": {
+    "name": "Axway",
+    "email": "support@axway.com",
+    "url": "https://axway.com"
+  },
+  "bugs": {
+    "url": "https://axway.com"
+  },
+  "dependencies": {
+    "if-env": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.3.17",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "*",
+    "chai": "^3.5.0",
+    "esdoc": "^0.4.8",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "node-readme": "^0.1.8",
+    "rimraf": "^2.5.4",
+    "swagger-parser": "^3.4.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "files": [
+    "dist/*",
+    "README.md",
+    "LICENCE"
+  ],
+  "keywords": [
+    "node",
+    "openapi",
+    "swagger"
+  ],
+  "license": "SEE LICENCE IN LICENCE",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appcelerator/openapi-doc"
+  },
+  "scripts": {
+    "build": "if-env NODE_ENV=production && npm run build:prod || npm run build:dev",
+    "build:dev": "npm run build:lint && npm run test && npm run build:readme && npm run build:doc && babel -d ./dist ./src",
+    "build:doc": "esdoc -c esdoc.json",
+    "build:lint": "eslint ./src",
+    "build:prod": "npm prune --production",
+    "build:readme": "node-readme",
+    "clean": "rimraf dist coverage doc README.md",
+    "posttest": "istanbul check-coverage coverage/coverage.json --line 80 --branch 80 --statement 80",
+    "release:publish": "git add -A && git push && git push --tags && npm publish",
+    "release:major": "npm version major && npm run release:publish && git push --follow-tags",
+    "release:minor": "npm version minor && npm run release:publish && git push --follow-tags",
+    "release:patch": "npm version patch && npm run release:publish && git push --follow-tags",
+    "release:prerelease": "npm version prerelease && npm run release:publish && git push --follow-tags",
+    "test": "rm -rf coverage && NODE_ENV=test istanbul cover _mocha -- -R spec"
+  }
+}
